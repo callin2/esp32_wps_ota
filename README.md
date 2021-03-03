@@ -21,6 +21,6 @@ ESP32 ARDUINO WPS OTA
 - uncomment several lines in `platformio.ini` 
 
 ## enjoy cable free development with ota
-- you only need to supply power to youe eps32.
+- you only need to supply power to your eps32.
 - add your code.
 - compile and upload via ota. 

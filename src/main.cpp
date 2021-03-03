@@ -1,33 +1,16 @@
 #include <Arduino.h>
-#include "ESP32_OTA.h"
-
-void read() {
-
-}
-
-void execute() {
-
-}
-
-
-void write() {
-
-}
+#include "../lib/ota/ESP32_OTA.h"
 
 
 void setup() {
     Serial.begin(115200);
     Serial.println("Booting");
-    // low-rise house workshop (낮은집 작업실)
+    // change 'nameprefix' to unique name as you wish.
     setupWPS_OTA("LRH_Workshop");
 
+    // your 'setup code' here.
 }
 
 void loop() {
-    read();
-    delay(1);
-    execute();
-    delay(1);
-    write();
-    delay(1);
+    // your code here.
 }

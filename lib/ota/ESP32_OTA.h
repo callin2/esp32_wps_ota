@@ -5,12 +5,12 @@
 #ifndef OTA_ESP32_OTA_H
 #define OTA_ESP32_OTA_H
 
-#include <WiFi.h>
-#include <ESPmDNS.h>
+#include "WiFi.h"
+#include "ESPmDNS.h"
+#include "WiFiUdp.h"
+#include "ArduinoOTA.h"
 #include "esp_wps.h"
 
-#include <WiFiUdp.h>
-#include <ArduinoOTA.h>
 
 #define ESP_WPS_MODE      WPS_TYPE_PBC
 #define ESP_MANUFACTURER  "ESPRESSIF"
@@ -58,10 +58,6 @@ void setupOTA() {
     ArduinoOTA.setHostname(fullhostname);
     delete[] fullhostname;
 
-    // Configure and start the WiFi station
-//    WiFi.mode(WIFI_STA);
-//    WiFi.begin(ssid, password);
-
     // Wait for connection
     while (WiFi.waitForConnectResult() != WL_CONNECTED) {
         Serial.println("Connection Failed! Rebooting...");
@@ -70,7 +66,7 @@ void setupOTA() {
     }
 
     // Port defaults to 3232
-    // ArduinoOTA.setPort(3232); // Use 8266 port if you are working in Sloeber IDE, it is fixed there and not adjustable
+     ArduinoOTA.setPort(3232); // Use 8266 port if you are working in Sloeber IDE, it is fixed there and not adjustable
 
     // No authentication by default
     // ArduinoOTA.setPassword("admin");
@@ -155,9 +151,6 @@ void WiFiEvent(WiFiEvent_t event, system_event_info_t info){
             break;
         case SYSTEM_EVENT_STA_WPS_ER_TIMEOUT:
             Serial.println("WPS Timedout, retrying");
-//            esp_wifi_wps_disable();
-//            esp_wifi_wps_enable(&config);
-//            esp_wifi_wps_start(0);
             ESP.restart();
             break;
         case SYSTEM_EVENT_STA_WPS_ER_PIN:
@@ -188,6 +181,7 @@ void setupWPS_OTA(const char* nameprefix) {
     if(state != WL_CONNECTED) {
         Serial.println("not connected yet!");
 
+        WiFi.disconnect();
         WiFi.mode(WIFI_MODE_STA);
         Serial.println("Starting WPS");
 
